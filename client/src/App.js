@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import axios from 'axios'
+import PlayerList from './components/PlayerList.js';
+import Navbar from './components/NavBar.js';
 
 function App() {
+  const [players, setPlayers] = useState([])
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/api/players')
+      .then(res => {
+        console.log(res.data)
+        setPlayers(res.data);
+      })
+      .catch(error => {
+        console.log('err', error)
+      })
+
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <title>2019 Women's World Cup</title>
+      <Navbar />
+      <PlayerList players={players} />
     </div>
   );
 }
-
 export default App;
