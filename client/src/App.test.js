@@ -17,12 +17,13 @@ afterAll(() => {
 })
 
 
+
 it("renders without crashing", () => {
   const container = render(<App />);
 });
 
 
-test('Navbar title displays correctly', () => {
+test('Title displays correctly', () => {
   const { getByText } = render(<App />);
   getByText(/2019 Women's World Cup/i)
 })
@@ -30,6 +31,6 @@ test('Navbar title displays correctly', () => {
 
 
 // test('Darkmode functions correctly', () => {
-//   const { getByLabelText } = render(<App />);
-//   fireEvent.click(getByText(/dark mode/i));
+//   const { getByText } = render(<App />);
+//   fireEvent.click(getByText(/togglemode/i));
 // })
