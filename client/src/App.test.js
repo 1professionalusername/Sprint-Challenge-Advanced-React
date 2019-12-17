@@ -1,9 +1,36 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import App from './App'
+import { render, fireEvent } from "@testing-library/react"
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+const originalError = console.error
+beforeAll(() => {
+  console.error = (...args) => {
+    if (/Warning.*not wrapped in act/.test(args[0])) {
+      return
+    }
+    originalError.call(console, ...args)
+  }
+})
+
+afterAll(() => {
+  console.error = originalError
+})
+
+
+
+it("renders without crashing", () => {
+  const container = render(<App />);
 });
+
+
+test('Title displays correctly', () => {
+  const { getByText } = render(<App />);
+  getByText(/2019 Women's World Cup/i)
+})
+
+
+
+// test('Darkmode functions correctly', () => {
+//   const { getByText } = render(<App />);
+//   fireEvent.click(getByText(/togglemode/i));
+// })
